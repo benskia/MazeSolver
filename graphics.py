@@ -41,35 +41,3 @@ class Line:
         canvas.create_line(
             self.pt1.x, self.pt1.y, self.pt2.x, self.pt2.y, fill=fill_color, width=2
         )
-
-
-class Cell:
-    def __init__(self, pt1, pt2, canvas):
-        self.has_left_wall = True
-        self.has_right_wall = True
-        self.has_top_wall = True
-        self.has_bottom_wall = True
-        self._x1 = pt1.x
-        self._y1 = pt1.y
-        self._x2 = pt2.x
-        self._y2 = pt2.y
-        self._win = canvas
-        self._fill = "black"
-
-    def draw(self, x1, y1, x2, y2):
-        top_left = Point(x1, y1)
-        bot_left = Point(x1, y2)
-        top_right = Point(x2, y1)
-        bot_right = Point(x2, y2)
-        if self.has_left_wall:
-            left_wall = Line(top_left, bot_left)
-            left_wall.draw(self._win, self._fill)
-        if self.has_top_wall:
-            top_wall = Line(top_left, top_right)
-            top_wall.draw(self._win, self._fill)
-        if self.has_right_wall:
-            right_wall = Line(top_right, bot_right)
-            right_wall.draw(self._win, self._fill)
-        if self.has_bottom_wall:
-            bottom_wall = Line(bot_left, bot_right)
-            bottom_wall.draw(self._win, self._fill)
