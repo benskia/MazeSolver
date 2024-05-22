@@ -22,7 +22,7 @@ class Window:
     def close(self):
         self.__is_running = False
 
-    def create_line(self, line, fill_color):
+    def create_line(self, line, fill_color="black"):
         line.draw(self.__canvas, fill_color)
 
 
