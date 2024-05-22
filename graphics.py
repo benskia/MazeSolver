@@ -54,7 +54,22 @@ class Cell:
         self._x2 = pt2.x
         self._y2 = pt2.y
         self._win = canvas
+        self._fill = "black"
 
     def draw(self, x1, y1, x2, y2):
+        top_left = Point(x1, y1)
+        bot_left = Point(x1, y2)
+        top_right = Point(x2, y1)
+        bot_right = Point(x2, y2)
         if self.has_left_wall:
-            pass
+            left_wall = Line(top_left, bot_left)
+            left_wall.draw(self._win, self._fill)
+        if self.has_top_wall:
+            top_wall = Line(top_left, top_right)
+            top_wall.draw(self._win, self._fill)
+        if self.has_right_wall:
+            right_wall = Line(top_right, bot_right)
+            right_wall.draw(self._win, self._fill)
+        if self.has_bottom_wall:
+            bottom_wall = Line(bot_left, bot_right)
+            bottom_wall.draw(self._win, self._fill)
