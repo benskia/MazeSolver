@@ -2,7 +2,7 @@ from graphics import Line, Point
 
 
 class Cell:
-    def __init__(self, canvas):
+    def __init__(self, win=None):
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
@@ -11,7 +11,7 @@ class Cell:
         self._y1 = None
         self._x2 = None
         self._y2 = None
-        self._win = canvas
+        self._win = win
 
     def draw(self, x1, y1, x2, y2):
         if self._win is None:
@@ -20,21 +20,20 @@ class Cell:
         bot_left = Point(x1, y2)
         bot_right = Point(x2, y2)
         top_right = Point(x2, y1)
-        if self.has_left_wall:
-            left_wall = Line(top_left, bot_left)
-            self._win.create_line(left_wall)
-        if self.has_top_wall:
-            top_wall = Line(top_left, top_right)
-            self._win.create_line(top_wall)
-        if self.has_right_wall:
-            right_wall = Line(top_right, bot_right)
-            self._win.create_line(right_wall)
-        if self.has_bottom_wall:
-            bottom_wall = Line(bot_left, bot_right)
-            self._win.create_line(bottom_wall)
+
+        fill_color
+
+        left_wall = Line(top_left, bot_left, fill_color)
+        top_wall = Line(top_left, top_right, fill_color)
+        right_wall = Line(top_right, bot_right, fill_color)
+        bottom_wall = Line(bot_left, bot_right, fill_color)
+        self._win.create_line(left_wall)
+        self._win.create_line(top_wall)
+        self._win.create_line(right_wall)
+        self._win.create_line(bottom_wall)
 
     def draw_move(self, to_cell, undo=False):
-        if self._x1 is None or self._x2 is None:
+        if self._x1 is None or self._x2 is None or self._win is None:
             return
         current_half_length = abs(self._x2 - self._x1) // 2
         current_center_x = self._x1 + current_half_length
