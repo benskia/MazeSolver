@@ -1,8 +1,8 @@
-from graphics import Line, Point
+from graphics import Line, Point, Window
 
 
 class Cell:
-    def __init__(self, win=None):
+    def __init__(self, win: Window | None = None) -> None:
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
@@ -13,28 +13,40 @@ class Cell:
         self._y2 = None
         self._win = win
 
-    def draw(self, x1, y1, x2, y2):
+    def draw(self, x1: int, y1: int, x2: int, y2: int) -> None:
         if self._win is None:
-            return
+            raise Exception("Cell has no associated window.")
+        fill_color_white = "white"
         top_left = Point(x1, y1)
+        top_right = Point(x2, y1)
         bot_left = Point(x1, y2)
         bot_right = Point(x2, y2)
-        top_right = Point(x2, y1)
-
-        fill_color
-
-        left_wall = Line(top_left, bot_left, fill_color)
-        top_wall = Line(top_left, top_right, fill_color)
-        right_wall = Line(top_right, bot_right, fill_color)
-        bottom_wall = Line(bot_left, bot_right, fill_color)
-        self._win.create_line(left_wall)
-        self._win.create_line(top_wall)
-        self._win.create_line(right_wall)
-        self._win.create_line(bottom_wall)
+        left_wall = Line(top_left, bot_left)
+        right_wall = Line(top_right, bot_right)
+        top_wall = Line(top_left, top_right)
+        bottom_wall = Line(bot_left, bot_right)
+        if self.has_left_wall:
+            self._win.draw_line(left_wall)
+        else:
+            self._win.draw_line(left_wall, fill_color_white)
+        if self.has_right_wall:
+            self._win.draw_line(right_wall)
+        else:
+            self._win.draw_line(right_wall, fill_color_white)
+        if self.has_top_wall:
+            self._win.draw_line(top_wall)
+        else:
+            self._win.draw_line(top_wall, fill_color_white)
+        if self.has_bottom_wall:
+            self._win.draw_line(bottom_wall)
+        else:
+            self._win.draw_line(bottom_wall, fill_color_white)
 
     def draw_move(self, to_cell, undo=False):
-        if self._x1 is None or self._x2 is None or self._win is None:
-            return
+        if self._x1 is None or self._x2 is None:
+            raise Exception("Cell is missing one or both x coordinates.")
+        if self._win is None:
+            raise Exception("Cell has no associated window.")
         current_half_length = abs(self._x2 - self._x1) // 2
         current_center_x = self._x1 + current_half_length
         current_center_y = self._y1 + current_half_length
@@ -46,4 +58,4 @@ class Cell:
         next_center = Point(next_center_x, next_center_y)
         line = Line(current_center, next_center)
         fill_color = "gray" if undo else "red"
-        self._win.create_line(line, fill_color)
+        self._win.draw_line(line, fill_color)
