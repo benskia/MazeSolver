@@ -12,10 +12,11 @@ class Cell:
         self._x2 = None
         self._y2 = None
         self._win = win
+        self.visited = False
 
     def draw(self, x1: int, y1: int, x2: int, y2: int) -> None:
         if self._win is None:
-            raise Exception("Cell has no associated window.")
+            return
         fill_color_white = "white"
         top_left = Point(x1, y1)
         top_right = Point(x2, y1)
@@ -43,10 +44,8 @@ class Cell:
             self._win.draw_line(bottom_wall, fill_color_white)
 
     def draw_move(self, to_cell, undo=False):
-        if self._x1 is None or self._x2 is None:
-            raise Exception("Cell is missing one or both x coordinates.")
-        if self._win is None:
-            raise Exception("Cell has no associated window.")
+        if self._x1 is None or self._x2 is None or self._win is None:
+            return
         current_half_length = abs(self._x2 - self._x1) // 2
         current_center_x = self._x1 + current_half_length
         current_center_y = self._y1 + current_half_length
