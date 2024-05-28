@@ -16,7 +16,7 @@ class Maze:
         cell_size_y: int,
         win: Window | None = None,
         seed=None,
-    ):
+    ) -> None:
         self._x1 = x1
         self._y1 = y1
         self._num_rows = num_rows
@@ -40,7 +40,7 @@ class Maze:
                 maze_printout += f"Row {i} Cell {j}: x1={x1} y1={y1} x2={x2} y2={y2} win={win}\n"
         return maze_printout
 
-    def _create_cells(self):
+    def _create_cells(self) -> None:
         self._cells = []
         for i in range(self._num_rows):
             row_cells = []

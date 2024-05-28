@@ -1,3 +1,3 @@
 # Maze Solver
 
-A maze generator and solver with GUI.
+A Python app for generating a maze from random or seeded values and solving it.
