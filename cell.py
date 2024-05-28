@@ -15,6 +15,10 @@ class Cell:
         self.visited = False
 
     def draw(self, x1: int, y1: int, x2: int, y2: int) -> None:
+        self._x1 = x1
+        self._y1 = y1
+        self._x2 = x2
+        self._y2 = y2
         if self._win is None:
             return
         fill_color_white = "white"
@@ -44,7 +48,14 @@ class Cell:
             self._win.draw_line(bottom_wall, fill_color_white)
 
     def draw_move(self, to_cell, undo=False):
-        if self._x1 is None or self._x2 is None or self._win is None:
+        if self._x1 is None:
+            print("draw_move: x1 is None")
+            return
+        if self._x2 is None:
+            print("draw_move: x2 is None")
+            return
+        if self._win is None:
+            print("draw_move: win is None")
             return
         current_half_length = abs(self._x2 - self._x1) // 2
         current_center_x = self._x1 + current_half_length

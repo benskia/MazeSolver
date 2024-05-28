@@ -28,6 +28,18 @@ class Maze:
         if seed:
             random.seed(seed)
 
+    def __repr__(self) -> str:
+        maze_printout = ""
+        for i in range(self._num_rows):
+            for j in range(self._num_cols):
+                x1 = self._cells[i][j]._x1
+                x2 = self._cells[i][j]._x2
+                y1 = self._cells[i][j]._y1
+                y2 = self._cells[i][j]._y2
+                win = True if self._cells[i][j]._win else False
+                maze_printout += f"Row {i} Cell {j}: x1={x1} y1={y1} x2={x2} y2={y2} win={win}\n"
+        return maze_printout
+
     def _create_cells(self):
         self._cells = []
         for i in range(self._num_rows):
@@ -115,6 +127,7 @@ class Maze:
         self._cells[i][j].visited = True
         is_exit_cell = i == self._num_rows - 1 and j == self._num_cols - 1
         if is_exit_cell:
+            # print("solved maze")
             return True
         can_travel_up = (
             i > 0
@@ -137,27 +150,32 @@ class Maze:
             and not self._cells[i][j + 1].visited
         )
         if can_travel_up:
+            # print("moving up")
             self._cells[i][j].draw_move(self._cells[i - 1][j])
             exit_found = self._solve_r(i - 1, j)
             if exit_found:
                 return True
             self._cells[i][j].draw_move(self._cells[i - 1][j], undo=True)
         if can_travel_down:
+            # print("moving down")
             self._cells[i][j].draw_move(self._cells[i + 1][j])
             exit_found = self._solve_r(i + 1, j)
             if exit_found:
                 return True
             self._cells[i][j].draw_move(self._cells[i + 1][j], undo=True)
         if can_travel_left:
+            # print("moving left")
             self._cells[i][j].draw_move(self._cells[i][j - 1])
             exit_found = self._solve_r(i, j - 1)
             if exit_found:
                 return True
             self._cells[i][j].draw_move(self._cells[i][j - 1], undo=True)
         if can_travel_right:
+            # print("moving right")
             self._cells[i][j].draw_move(self._cells[i][j + 1])
             exit_found = self._solve_r(i, j + 1)
             if exit_found:
                 return True
             self._cells[i][j].draw_move(self._cells[i][j + 1], undo=True)
+        # print("failed to solve")
         return False
